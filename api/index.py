@@ -112,7 +112,11 @@ student_marks = [
 def get_marks():
     # Get the names from the query parameters
     names = request.args.getlist("name")
+    # Create a dictionary for faster lookup
+    student_marks_dict = {
+        student["name"]: student["marks"] for student in student_marks
+    }
     # Retrieve marks for the given names
-    marks = [student_marks.get(name, "Name not found") for name in names]
+    marks = [student_marks_dict.get(name, "Name not found") for name in names]
     # Return the JSON response
     return jsonify({"marks": marks})
